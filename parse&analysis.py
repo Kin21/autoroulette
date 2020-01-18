@@ -15,24 +15,35 @@ def get_jsons_history():
         time.sleep(0.4)
         print("In process: " + str((100*i)/num_of_history_pages)+"%")
     print("Ready: 100%")
+
+
 def console_analysis():
-    longest_no_red = 0
+    longest_no_red = 0    ##Value of the longest line when some color doesn`t drop
     longest_no_black = 0
-    longest_red = 0
+
+    longest_red = 0       ##Value of the longest line with same color
     longest_black = 0
+
     num_black = 0
-    num_red = 0
+    num_red = 0       # Number of dropped color
     num_green = 0
+
     temp_no_red = 0
     temp_no_black = 0
-    temp_red = 0
+    temp_red = 0     # Temp values to find the longest line
     temp_black = 0
+    temp_snake = 0
+
+    snake_line = 0 # The longest line where no same color that repeated
+
+
     for i in range(0,num_of_history_pages):
         with open('history/Roulette_hisory'+str(i)+".json", "r") as read_file:
             data = json.load(read_file)
-        for sesion in data["response"]["data"]:
-            color = int(sesion["outcome"])
-            if color >= 1 and color <= 7:
+        for session in data["response"]["data"]:
+            color = int(session["outcome"])
+            if color >= 1 and color <= 7:    # 1 <= RED <= 7
+                
                 num_red += 1
                 temp_red += 1
                 temp_no_black += 1
@@ -42,7 +53,7 @@ def console_analysis():
                 if temp_black > longest_black:
                     longest_black = temp_black
                 temp_black = 0
-            elif color >= 8 and color <= 14:
+            elif color >= 8 and color <= 14:  # Black
                 num_black += 1
                 temp_no_red += 1
                 temp_black += 1
@@ -52,7 +63,7 @@ def console_analysis():
                 if temp_red > longest_red:
                     longest_red = temp_red
                 temp_red = 0
-            elif color == 0:
+            elif color == 0:      #Green
                 num_green += 1
                 temp_no_red += 1
                 temp_no_black += 1

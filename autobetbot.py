@@ -6,7 +6,7 @@ import msvcrt
 def coords_init():
     with open("config.json",'r') as config_file: ## Main json file with all necessary info
         config = json.load(config_file)
-    current_key = 's'                              
+    current_key = 's'
     bad_keys_num = 0
     while current_key != b'q':
         current_key = msvcrt.getch()
@@ -28,7 +28,7 @@ def coords_init():
             print("Betline coords had successfully set!")
         else:
             if bad_keys_num >= 5:
-                print("Use help")
+                print("Press key to set coords:\nr/g/b to set color\ni to Item\nl(L) to betline")
                 bad_keys_num = 0
             else:
                  bad_keys_num += 1
@@ -59,13 +59,5 @@ def test_coord():
         pyautogui.moveTo(x, y, 2, pyautogui.easeInQuad)
 
 
-def temp():
-    with open("config.json",'r') as config_file:
-        config = json.load(config_file)
-    for i in config["coords"]:
-        x,y = config["coords"][i]
-        print("x=" + str(x)+"y=" + str(y))
-
 
 coords_init()
-sell_item()
