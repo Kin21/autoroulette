@@ -57,7 +57,3 @@ def test_coord():
     for section in config["coords"]:
         x,y = config["coords"][section]
         pyautogui.moveTo(x, y, 2, pyautogui.easeInQuad)
-
-
-
-coords_init()

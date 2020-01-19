@@ -4,7 +4,7 @@ import time
 
 
 base_history_url = "https://www.wtfskins.com/api/v1/rouletteroundhistory/?limit=50&offset="
-num_of_history_pages = 4
+num_of_history_pages = 10
 
 def get_jsons_history():
     for i in range(0,num_of_history_pages):
@@ -15,6 +15,10 @@ def get_jsons_history():
         print("In process: " + str((100*i)/num_of_history_pages)+"%")
     print("Ready: 100%")
 
+def get_result():
+    r = requests.get(base_history_url+"0")
+    data = json.loads(r.text)
+    return [data["response"]["data"][0]["outcome"],data["response"]["data"][0]["id"]]
 
 def console_analysis():
     longest_no_red = 0    ##Value of the longest line when some color doesn`t drop
@@ -95,9 +99,9 @@ def console_analysis():
     print("Snake line: " + str(snake_line))
 
 def init():
-    current_balance = int(input("Write your balance: "))
-    current_bet = int(input("Write your first bet: "))
-    final_sum= int(input("Write your final sum: "))
+    current_balance = float(input("Write your balance: "))
+    current_bet = float(input("Write your first bet: "))
+    final_sum= float(input("Write your final sum: "))
     print("\nIs it right ?\ncurrent_balance: "+str(current_balance)+"\nFirst bet: "+str(current_bet)+"\nFinal_sum: " + str(final_sum))
     ok = str(input("Y/N ?\n")).lower()
     if ok == 'n':
@@ -145,7 +149,6 @@ def check_chance(first_bet,balance,final_sum):
         elif(color_list[i] == 0):
             current_balance -= current_bet
             current_bet *= 2
-        print(current_balance)
     if successfully + unsuccessfully == 0:
         print("This data is not enough to say about success")
     else:
